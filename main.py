@@ -29,11 +29,6 @@ def main():
         check_user_choice = functionalities.check_existence(
             list_random_word, user_choice
         )
-        # Handles the absence of users choice
-        if not check_user_choice["status"]:
-            score -= 1
-            selected_letters.add(user_choice)
-            print(f"'{user_choice}' not in word or no longer exists")
         # if user_choice in selected_letters:
         #     score += 1
         #     print(f"{user_choice} already chosen")
@@ -44,6 +39,14 @@ def main():
                 position_of_letter
             ]
             list_random_word[position_of_letter] = "_"
+        # Handles the absence of users choice
+        if not check_user_choice["status"]:
+            chosen = functionalities.chosen(selected_letters, user_choice, score)
+            if not chosen:
+                print(f"'{user_choice}' not in word or no longer exists")
+                score -= 1
+            if chosen:
+                print(f"'{user_choice} already taken'")
         # Game over logic
         if score == 0:
             print(f"You run out of scores, the correct word was '{random_word}'")

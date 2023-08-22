@@ -37,6 +37,7 @@ class Functionalities:
     def hide_random_word(self, random_word: str):
         random_word = ["_" for _ in random_word]
         return random_word
+        s
 
     # Check if input can be found in word
     def check_existence(self, word: list, letter: str):
@@ -44,6 +45,16 @@ class Functionalities:
             "status": letter in word,
             "position": word.index(letter) if letter in word else False,
         }
+
+    # Checking if user choice already in selected words
+    def chosen(self, collection_data: set, user_choice: str, score: int):
+        """If choice already taken, score does not deduct"""
+        if user_choice not in collection_data:
+            collection_data.add(user_choice)
+            return False
+        if user_choice in collection_data:
+            # print(f"{user_choice} already chosen")
+            return True
 
     # Assigning scores based on difficulty level
     def score_selection(self, mode: str):

@@ -1,5 +1,5 @@
 from random import choice
-from string import ascii_letters
+from string import ascii_letters, digits
 from words import words
 
 # VARIABLES
@@ -8,6 +8,27 @@ selected_letters = set()
 
 
 class Functionalities:
+    # Output
+    def data_output(self, status, message, mode):
+        return {"status": status, "message": message, "mode": mode}
+
+    # Choosing game mode
+    def choose_game_mode(self, game_mode: str):
+        if game_mode not in ["1", "2", "3", "4"]:
+            return self.data_output(False, "Please input a valid option", None)
+        if game_mode == "1":
+            return self.data_output(True, "single player selected", "single player")
+        if game_mode == "2":
+            return self.data_output(True, "multiplayer selected", "multiplayer")
+        if game_mode == "3":
+            return self.data_output(
+                True, "computer vs single player selected", "computer vs single player"
+            )
+        if game_mode == "4":
+            return self.data_output(
+                True, "computer vs computer selected", "computer vs computer"
+            )
+
     # Remove words with " " and "-"... and sets difficulty level
     def clean_words(self, mode):
         difficulty_levels = ["easy", "medium", "hard"]

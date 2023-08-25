@@ -1,4 +1,4 @@
-from utils import functionalities, selected_letters
+from utils import functionalities, selected_letters, multiplayer_functionalities
 
 
 print(
@@ -97,24 +97,25 @@ def multiplayer():
         print(
             f"Remaining score: {score}, wrong letters you have chosen: {selected_letters}"
         )
-        player_1_dashed_words = functionalities.hide_random_word(random_word)
+        # Dashed words for player 1
+        player_1_dashed_words = dashed_random_word
+        # Dashed words for player 2
         player_2_dashed_words = functionalities.hide_random_word(random_word)
         print()
+        # Showing dashed words
         print(f"{player_1}(player 1) dashed words")
         print(player_1_dashed_words)
         print()
         print(f"{player_2}(player 2) dashed words")
         print(player_2_dashed_words)
-
+        # Player 1 input
         player1_choice = input(f"{player_1}(player 1) guess a letter: ")
-        if len(player1_choice) > 1:
-            print(f"{player_1} select only one letter")
-            continue
-        print()
-        player2_choice = input(f"{player_2}(player 1) guess a letter: ")
-        if len(player2_choice) > 1:
-            print(f"{player_2}Select only one letter")
-            continue
+        multiplayer_functionalities.validate_user_input(player1_choice, player_1, "1")
+        # print()
+        # Player 2 input
+        player2_choice = input(f"{player_2}(player 2) guess a letter: ")
+        multiplayer_functionalities.validate_user_input(player2_choice, player_2, "2")
+
         # check_user_choice = functionalities.check_existence(
         #     list_random_word, user_choice
         #

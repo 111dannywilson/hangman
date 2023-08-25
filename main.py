@@ -1,21 +1,52 @@
 from utils import functionalities, selected_letters
 
 
-# Hangman Logic
-def main():
+print(
+    """
+1. Press(1) for single player
+2. Press(2) for multiplayer
+3. Press(3) for single player vs computer
+4. Press(4) for computer vs computer
+"""
+)
+
+selected_game_mode = None
+
+while True:
+    try:
+        game_mode = input("Choose game mode: ")
+        selected_game_mode = functionalities.choose_game_mode(game_mode)
+        # Validating game mode selection
+        if not selected_game_mode["status"]:
+            print(selected_game_mode["message"])
+            continue
+        # Retrieving selected game mode
+        if selected_game_mode["status"]:
+            print(f"{selected_game_mode['message']}")
+            break
+    except KeyboardInterrupt:
+        pass
+
+
+try:
     # Selection of difficulty | wrong input equals random difficulty
     difficulty_level = input("Difficulty level (easy, medium, hard): ")
 
     # Selecting scores and words based on difficulty level
-    score = functionalities.score_selection(difficulty_level)
     words = functionalities.clean_words(difficulty_level)
     # Assigning random word
     random_word = functionalities.generate_random_word(words)
     list_random_word = [ch for ch in random_word]
+    # Hiding random word
     dashed_random_word = functionalities.hide_random_word(random_word)
-    print(random_word)
+except KeyboardInterrupt:
+    pass
 
-    user_choice = ""
+
+# Hangman Logic
+def single_player():
+    print(random_word)
+    score = functionalities.score_selection(difficulty_level)
     while True:
         # Score board and used letters board
         print(
@@ -29,10 +60,6 @@ def main():
         check_user_choice = functionalities.check_existence(
             list_random_word, user_choice
         )
-        # if user_choice in selected_letters:
-        #     score += 1
-        #     print(f"{user_choice} already chosen")
-        # Handles the presence of users choice
         if check_user_choice["status"]:
             position_of_letter = check_user_choice["position"]
             dashed_random_word[position_of_letter] = list_random_word[
@@ -57,9 +84,60 @@ def main():
             break
 
 
+def multiplayer():
+    # Getting user names
+    player_1 = input("Player 1 input your name: ").capitalize()
+    player_2 = input("Player 2 input your name: ").capitalize()
+    # Random word
+    print(random_word)
+    score = functionalities.score_selection(difficulty_level)
+    print(score)
+    while True:
+        # Score board and used letters board
+        print(
+            f"Remaining score: {score}, wrong letters you have chosen: {selected_letters}"
+        )
+        player_1_dashed_words = functionalities.hide_random_word(random_word)
+        player_2_dashed_words = functionalities.hide_random_word(random_word)
+        print()
+        print(f"{player_1}(player 1) dashed words")
+        print(player_1_dashed_words)
+        print()
+        print(f"{player_2}(player 2) dashed words")
+        print(player_2_dashed_words)
+
+        player1_choice = input(f"{player_1}(player 1) guess a letter: ")
+        if len(player1_choice) > 1:
+            print(f"{player_1} select only one letter")
+            continue
+        print()
+        player2_choice = input(f"{player_2}(player 1) guess a letter: ")
+        if len(player2_choice) > 1:
+            print(f"{player_2}Select only one letter")
+            continue
+        # check_user_choice = functionalities.check_existence(
+        #     list_random_word, user_choice
+        #
+
+
+def computer_vs_single_player():
+    print("computer vs single player")
+
+
+def computer_vs_computer():
+    print("computer vs computer")
+
+
 if __name__ == "__main__":
     try:
-        main()
+        if selected_game_mode["mode"] == "single player":
+            single_player()
+        if selected_game_mode["mode"] == "multiplayer":
+            multiplayer()
+        if selected_game_mode["mode"] == "computer vs single player":
+            computer_vs_single_player()
+        if selected_game_mode["mode"] == "computer vs computer":
+            computer_vs_computer()
     except KeyboardInterrupt:
         pass
 

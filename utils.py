@@ -91,4 +91,17 @@ class Functionalities:
         return score
 
 
+class MultiplayerFunctionalities:
+    def validate_user_input(self, player_choice, player, player_num):
+        while True:
+            player_choice = input(f"{player}(player{player_num}) guess a letter: ")
+            if len(player_choice) > 1:
+                print(f"{player} select only one letter")
+            else:
+                break
+
+
+# Hangman functionalities instance
 functionalities = Functionalities()
+# Multiplayer functionalities
+multiplayer_functionalities = MultiplayerFunctionalities()

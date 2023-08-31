@@ -1,10 +1,16 @@
 from random import choice
 from string import ascii_letters, digits
+
 from words import words
 
 # VARIABLES
 letters = ascii_letters
+# Selected Letters for single player
 selected_letters = set()
+# Selected letters for multi players
+player1_selected_words = set()
+player2_selected_words = set()
+
 
 class Functionalities:
     # Output
@@ -91,21 +97,31 @@ class Functionalities:
 
 
 class MultiplayerFunctionalities:
+    # Initializing players word collection
     def __init__(self, player1_selected_words: set, player2_selected_words: set):
         self.player1_selected_words = player1_selected_words
         self.player2_selected_words = player2_selected_words
 
-    def validate_user_input(self, player_type):
+    # Check if user's input is in random word
+    def validate_user_input(self, player, player_type):
         while True:
-            player_choice = input(f"{player_type}(player 1) guess a letter: ")
+            player_choice = input(f"{player} {[player_type]} guess a letter: ")
             if len(player_choice) > 1 or player_choice.strip() == "":
                 print(f"{player_type} select only one letter or at least one letter")
             else:
                 return player_choice
                 break
 
-
+    # Getting the position correct guesses
+    def get_word_position(self, list_random_word: str, dashed_random_word: list, check_user_choice:dict):
+        if check_user_choice["status"]:
+            position_of_letter = check_user_choice["position"]
+            dashed_random_word[position_of_letter] = list_random_word[
+                position_of_letter
+            ]
+            list_random_word[position_of_letter] = "_"
+    
 # Hangman functionalities instance
 functionalities = Functionalities()
 # Multiplayer functionalities
-multiplayer_functionalities = MultiplayerFunctionalities()
+multiplayer_functionalities = MultiplayerFunctionalities(player1_selected_words, player2_selected_words)

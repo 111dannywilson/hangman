@@ -14,7 +14,8 @@ selected_game_mode = None
 
 while True:
     try:
-        game_mode = input("Choose game mode: ")
+        # game_mode = input("Choose game mode: ")
+        game_mode = "2"
         selected_game_mode = functionalities.choose_game_mode(game_mode)
         # Validating game mode selection
         if not selected_game_mode["status"]:
@@ -30,7 +31,8 @@ while True:
 
 try:
     # Selection of difficulty | wrong input equals random difficulty
-    difficulty_level = input("Difficulty level (easy, medium, hard): ")
+    # difficulty_level = input("Difficulty level (easy, medium, hard): ")
+    difficulty_level = "easy"
 
     # Selecting scores and words based on difficulty level
     words = functionalities.clean_words(difficulty_level)
@@ -86,13 +88,16 @@ def single_player():
 
 def multiplayer():
     # Getting user names
-    player_1 = input("Player 1 input your name: ").capitalize()
-    player_2 = input("Player 2 input your name: ").capitalize()
+    # player_1 = input("Player 1 input your name: ").capitalize()
+    # player_2 = input("Player 2 input your name: ").capitalize()
+    player_1 = "111"
+    player_2 = "222"
     # Random word
     print(random_word)
     score = functionalities.score_selection(difficulty_level)
     print(score)
     while True:
+        print()
         # Score board and used letters board
         print(
             f"Remaining score: {score}, wrong letters you have chosen: {selected_letters}"
@@ -101,6 +106,7 @@ def multiplayer():
         player_1_dashed_words = dashed_random_word
         # Dashed words for player 2
         player_2_dashed_words = functionalities.hide_random_word(random_word)
+        print(list_random_word)
         print()
         # Showing dashed words
         print(f"{player_1}(player 1) dashed words")
@@ -108,17 +114,21 @@ def multiplayer():
         print()
         print(f"{player_2}(player 2) dashed words")
         print(player_2_dashed_words)
-        # Player 1 input
-        player1_choice = input(f"{player_1}(player 1) guess a letter: ")
-        multiplayer_functionalities.validate_user_input(player1_choice, player_1, "1")
-        # print()
-        # Player 2 input
-        player2_choice = input(f"{player_2}(player 2) guess a letter: ")
-        multiplayer_functionalities.validate_user_input(player2_choice, player_2, "2")
 
-        # check_user_choice = functionalities.check_existence(
-        #     list_random_word, user_choice
-        #
+        # Player one choice
+        player1_choice = multiplayer_functionalities.validate_user_input("player1")
+        # Checking if player one has already chosen a letter
+        check_player1_choice = functionalities.check_existence(
+            list_random_word, player1_choice
+        )
+
+        print()
+        # Player two choice
+        player2_choice = multiplayer_functionalities.validate_user_input("player2")
+        check_player2_choice = functionalities.check_existence(
+            list_random_word, player2_choice
+        )
+        print(check_player2_choice)
 
 
 def computer_vs_single_player():

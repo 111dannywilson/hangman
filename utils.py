@@ -6,7 +6,6 @@ from words import words
 letters = ascii_letters
 selected_letters = set()
 
-
 class Functionalities:
     # Output
     def data_output(self, status, message, mode):
@@ -92,12 +91,17 @@ class Functionalities:
 
 
 class MultiplayerFunctionalities:
-    def validate_user_input(self, player_choice, player, player_num):
+    def __init__(self, player1_selected_words: set, player2_selected_words: set):
+        self.player1_selected_words = player1_selected_words
+        self.player2_selected_words = player2_selected_words
+
+    def validate_user_input(self, player_type):
         while True:
-            player_choice = input(f"{player}(player{player_num}) guess a letter: ")
-            if len(player_choice) > 1:
-                print(f"{player} select only one letter")
+            player_choice = input(f"{player_type}(player 1) guess a letter: ")
+            if len(player_choice) > 1 or player_choice.strip() == "":
+                print(f"{player_type} select only one letter or at least one letter")
             else:
+                return player_choice
                 break
 
 

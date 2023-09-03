@@ -1,3 +1,5 @@
+import contextlib
+
 from utils import functionalities, multiplayer_functionalities, selected_letters
 
 print(
@@ -12,7 +14,7 @@ print(
 selected_game_mode = None
 
 while True:
-    try:
+    with contextlib.suppress(KeyboardInterrupt):
         # game_mode = input("Choose game mode: ")
         game_mode = "2"
         selected_game_mode = functionalities.choose_game_mode(game_mode)
@@ -20,15 +22,9 @@ while True:
         if not selected_game_mode["status"]:
             print(selected_game_mode["message"])
             continue
-        # Retrieving selected game mode
-        if selected_game_mode["status"]:
-            print(f"{selected_game_mode['message']}")
-            break
-    except KeyboardInterrupt:
-        pass
-
-
-try:
+        print(f"{selected_game_mode['message']}")
+        break
+with contextlib.suppress(KeyboardInterrupt):
     # Selection of difficulty | wrong input equals random difficulty
     # difficulty_level = input("Difficulty level (easy, medium, hard): ")
     difficulty_level = "easy"
@@ -37,11 +33,9 @@ try:
     words = functionalities.clean_words(difficulty_level)
     # Assigning random word
     random_word = functionalities.generate_random_word(words)
-    list_random_word = [ch for ch in random_word]
+    list_random_word = list(random_word)
     # Hiding random word
     dashed_random_word = functionalities.hide_random_word(random_word)
-except KeyboardInterrupt:
-    pass
 
 
 # Hangman Logic
@@ -94,7 +88,10 @@ def multiplayer():
     # Random word
     print(random_word)
     # List random word for both players
-    player1_list_random_words, player2_list_random_words = list_random_word, [_ for _ in random_word]
+    (
+        player1_list_random_words,
+        player2_list_random_words,
+    ) = list_random_word, list(random_word)
     score = functionalities.score_selection(difficulty_level)
     print(score)
     # Dashed words for player 1
@@ -119,22 +116,30 @@ def multiplayer():
         print(player_2_dashed_words, "******88")
 
         # Player one choice
-        player1_choice = multiplayer_functionalities.validate_user_input("player1", f"{player_1}")
+        player1_choice = multiplayer_functionalities.validate_user_input(
+            "player1", f"{player_1}"
+        )
         # Checking if player one has already chosen a letter
         check_player1_choice = functionalities.check_existence(
             list_random_word, player1_choice
         )
         # Replacing correct guessed word with "_" in list random word
-        multiplayer_functionalities.get_word_position(player1_list_random_words, player_1_dashed_words ,check_player1_choice)
+        multiplayer_functionalities.get_word_position(
+            player1_list_random_words, player_1_dashed_words, check_player1_choice
+        )
 
         print()
         # Player two choice
-        player2_choice = multiplayer_functionalities.validate_user_input("player2", f"{player_2}")
+        player2_choice = multiplayer_functionalities.validate_user_input(
+            "player2", f"{player_2}"
+        )
         check_player2_choice = functionalities.check_existence(
             list_random_word, player2_choice
         )
         # Replacing correct guessed word with "_" in list random word
-        multiplayer_functionalities.get_word_position(player2_list_random_words, player_2_dashed_words ,check_player2_choice)
+        multiplayer_functionalities.get_word_position(
+            player2_list_random_words, player_2_dashed_words, check_player2_choice
+        )
 
 
 def computer_vs_single_player():
@@ -146,7 +151,7 @@ def computer_vs_computer():
 
 
 if __name__ == "__main__":
-    try:
+    with contextlib.suppress(KeyboardInterrupt):
         if selected_game_mode["mode"] == "single player":
             single_player()
         if selected_game_mode["mode"] == "multiplayer":
@@ -155,8 +160,6 @@ if __name__ == "__main__":
             computer_vs_single_player()
         if selected_game_mode["mode"] == "computer vs computer":
             computer_vs_computer()
-    except KeyboardInterrupt:
-        pass
 
 
 # Features

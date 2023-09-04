@@ -56,14 +56,11 @@ class Functionalities:
 
     # Random select a random word
     def generate_random_word(self, words):
-        random_word = choice(words)
-        return random_word
+        return choice(words)
 
     # Turn every letter to "_"
     def hide_random_word(self, random_word: str):
-        random_word = ["_" for _ in random_word]
-        return random_word
-        s
+        return ["_" for _ in random_word]
 
     # Check if input can be found in word
     def check_existence(self, word: list, letter: str):
@@ -78,13 +75,12 @@ class Functionalities:
         if user_choice not in collection_data:
             collection_data.add(user_choice)
             return False
-        if user_choice in collection_data:
-            # print(f"{user_choice} already chosen")
-            return True
+        # print(f"{user_choice} already chosen")
+        return True
 
     # Assigning scores based on difficulty level
     def score_selection(self, mode: str):
-        score = (
+        return (
             3
             if mode == "easy"
             else 4
@@ -93,7 +89,6 @@ class Functionalities:
             if mode == "hard"
             else 2
         )
-        return score
 
 
 class MultiplayerFunctionalities:
@@ -110,18 +105,22 @@ class MultiplayerFunctionalities:
                 print(f"{player_type} select only one letter or at least one letter")
             else:
                 return player_choice
-                break
 
     # Getting the position correct guesses
-    def get_word_position(self, list_random_word: str, dashed_random_word: list, check_user_choice:dict):
+    def get_word_position(
+        self, list_random_word: str, dashed_random_word: list, check_user_choice: dict
+    ):
         if check_user_choice["status"]:
             position_of_letter = check_user_choice["position"]
             dashed_random_word[position_of_letter] = list_random_word[
                 position_of_letter
             ]
             list_random_word[position_of_letter] = "_"
-    
+
+
 # Hangman functionalities instance
 functionalities = Functionalities()
 # Multiplayer functionalities
-multiplayer_functionalities = MultiplayerFunctionalities(player1_selected_words, player2_selected_words)
+multiplayer_functionalities = MultiplayerFunctionalities(
+    player1_selected_words, player2_selected_words
+)

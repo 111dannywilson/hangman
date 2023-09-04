@@ -97,7 +97,8 @@ def multiplayer():
     # Dashed words for player 1
     player_1_dashed_words = dashed_random_word
     # Dashed words for player 2
-    player_2_dashed_words = functionalities.hide_random_word(random_word)
+    player2_dashed_words = functionalities.hide_random_word(random_word)
+
     while True:
         print()
         # Score board and used letters board
@@ -113,7 +114,7 @@ def multiplayer():
         print(player_1_dashed_words)
         print()
         print(f"{player_2}(player 2) dashed words")
-        print(player_2_dashed_words, "******88")
+        print(player2_dashed_words, "******88")
 
         # Player one choice
         player1_choice = multiplayer_functionalities.validate_user_input(
@@ -138,7 +139,7 @@ def multiplayer():
         )
         # Replacing correct guessed word with "_" in list random word
         multiplayer_functionalities.get_word_position(
-            player2_list_random_words, player_2_dashed_words, check_player2_choice
+            player2_list_random_words, player2_dashed_words, check_player2_choice
         )
 
 
@@ -164,3 +165,7 @@ if __name__ == "__main__":
 
 # Features
 # 1. Score won't decrease if choice already exist in chosen words
+
+
+# Errors
+# 1. Fix bug: Make player 2 list words stand independent

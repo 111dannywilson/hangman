@@ -135,7 +135,7 @@ def multiplayer():
             "player2", f"{player_2}"
         )
         check_player2_choice = functionalities.check_existence(
-            list_random_word, player2_choice
+            player2_list_random_words, player2_choice
         )
         # Replacing correct guessed word with "_" in list random word
         multiplayer_functionalities.get_word_position(

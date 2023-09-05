@@ -168,4 +168,4 @@ if __name__ == "__main__":
 
 
 # Errors
-# 1. Fix bug: Make player 2 list words stand independent
+# 1. Fix bug: Make player 2 list words stand independent - fix

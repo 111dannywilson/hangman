@@ -1,10 +1,9 @@
 from random import choice
-from string import ascii_letters, digits
+from string import ascii_lowercase
 
 from words import words
 
 # VARIABLES
-letters = ascii_letters
 # Selected Letters for single player
 selected_letters = set()
 # Selected letters for multi players
@@ -42,8 +41,7 @@ class Functionalities:
         # Checking if difficulty mode is valid
         if mode not in difficulty_levels:
             print("Random difficulty selected")
-            random_words = [word for word in valid_words]
-            return random_words
+            return list(valid_words)
         # Setting difficulty level
         word_difficulty = {
             "easy": [word for word in valid_words if len(word) <= 4],
@@ -70,7 +68,7 @@ class Functionalities:
         }
 
     # Checking if user choice already in selected words
-    def chosen(self, collection_data: set, user_choice: str, score: int):
+    def chosen(self, collection_data: set, user_choice: str):
         """If choice already taken, score does not deduct"""
         if user_choice not in collection_data:
             collection_data.add(user_choice)
@@ -92,17 +90,14 @@ class Functionalities:
 
 
 class MultiplayerFunctionalities:
-    # Initializing players word collection
-    def __init__(self, player1_selected_words: set, player2_selected_words: set):
-        self.player1_selected_words = player1_selected_words
-        self.player2_selected_words = player2_selected_words
-
     # Check if user's input is in random word
     def validate_user_input(self, player, player_type):
         while True:
-            player_choice = input(f"{player} {[player_type]} guess a letter: ")
+            player_choice = input(f"{player} {[player_type]} guess a letter: ").lower()
             if len(player_choice) > 1 or player_choice.strip() == "":
                 print(f"{player_type} select only one letter or at least one letter")
+            if player_choice not in ascii_lowercase:
+                print(f"{player_type} select a valid letter")
             else:
                 return player_choice
 
@@ -117,10 +112,25 @@ class MultiplayerFunctionalities:
             ]
             list_random_word[position_of_letter] = "_"
 
+    # Storing wrongly chosen words
+    def chosen_words(
+        self, user_choice: str, list_random_word: list, collection_data: set
+    ):
+        if user_choice not in list_random_word:
+            collection_data.add(user_choice)
+
+    def set_scores(
+        self, p1_score: int, p1_status: bool, p2_score: int, p2_status: bool
+    ):
+        if not p1_status:
+            p1_score -= 1
+        if not p2_status:
+            p2_score -= 1
+        print("************", p1_status, p1_score)
+        print("************", p2_status, p2_score)
+
 
 # Hangman functionalities instance
 functionalities = Functionalities()
 # Multiplayer functionalities
-multiplayer_functionalities = MultiplayerFunctionalities(
-    player1_selected_words, player2_selected_words
-)
+multiplayer_functionalities = MultiplayerFunctionalities()

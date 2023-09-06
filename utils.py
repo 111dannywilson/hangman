@@ -126,8 +126,6 @@ class MultiplayerFunctionalities:
             p1_score -= 1
         if not p2_status:
             p2_score -= 1
-        print("************", p1_status, p1_score)
-        print("************", p2_status, p2_score)
 
 
 # Hangman functionalities instance

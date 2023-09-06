@@ -1,6 +1,11 @@
 import contextlib
-
-from utils import functionalities, multiplayer_functionalities, selected_letters
+from utils import (
+    functionalities,
+    multiplayer_functionalities,
+    selected_letters,
+    player1_selected_words,
+    player2_selected_words,
+)
 
 print(
     """
@@ -10,6 +15,7 @@ print(
 4. Press(4) for computer vs computer
 """
 )
+
 
 selected_game_mode = None
 
@@ -63,7 +69,7 @@ def single_player():
             list_random_word[position_of_letter] = "_"
         # Handles the absence of users choice
         if not check_user_choice["status"]:
-            chosen = functionalities.chosen(selected_letters, user_choice, score)
+            chosen = functionalities.chosen(selected_letters, user_choice)
             if not chosen:
                 print(f"'{user_choice}' not in word or no longer exists")
                 score -= 1
@@ -96,16 +102,16 @@ def multiplayer():
     print(score)
     # Dashed words for player 1
     player_1_dashed_words = dashed_random_word
+    player1_score = score
     # Dashed words for player 2
     player2_dashed_words = functionalities.hide_random_word(random_word)
+    player2_score = functionalities.score_selection(difficulty_level)
 
     while True:
         print()
         # Score board and used letters board
-        print(
-            f"Remaining score: {score}, wrong letters you have chosen: {selected_letters}"
-        )
-
+        print(f"Player 1 score: {player1_score}| Player 2 score: {player1_score}")
+        print()
         print(f"Player One board ->  {player1_list_random_words}")
         print(f"Player Two board -> {player2_list_random_words}")
         print()
@@ -119,6 +125,10 @@ def multiplayer():
         # Player one choice
         player1_choice = multiplayer_functionalities.validate_user_input(
             "player1", f"{player_1}"
+        )
+        # Adding player 1 choices to selected letters data
+        multiplayer_functionalities.chosen_words(
+            player1_choice, player1_list_random_words, player1_selected_words
         )
         # Checking if player one has already chosen a letter
         check_player1_choice = functionalities.check_existence(
@@ -134,12 +144,28 @@ def multiplayer():
         player2_choice = multiplayer_functionalities.validate_user_input(
             "player2", f"{player_2}"
         )
+        # Adding player 2 choices to selected letters data
+        multiplayer_functionalities.chosen_words(
+            player2_choice, player2_list_random_words, player2_selected_words
+        )
         check_player2_choice = functionalities.check_existence(
             player2_list_random_words, player2_choice
         )
         # Replacing correct guessed word with "_" in list random word
         multiplayer_functionalities.get_word_position(
             player2_list_random_words, player2_dashed_words, check_player2_choice
+        )
+
+        print()
+        print(
+            f"Player 1 selected words: {player1_selected_words} | Player 2 selected words{player2_selected_words}"
+        )
+
+        multiplayer_functionalities.set_scores(
+            player1_score,
+            check_player1_choice["status"],
+            player2_score,
+            check_player2_choice["status"],
         )
 
 
@@ -165,7 +191,9 @@ if __name__ == "__main__":
 
 # Features
 # 1. Score won't decrease if choice already exist in chosen words
-
+# 2. Get each chosen word for both players - done
+# 3. Get winner, loser, draw
+# 4. Deduct score when answers are wrong
 
 # Errors
-# 1. Fix bug: Make player 2 list words stand independent - fix
+# 1. Fix bug: Make player 2 list words stand independent - fixed

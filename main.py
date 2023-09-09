@@ -160,12 +160,15 @@ def multiplayer():
         print(
             f"Player 1 selected words: {player1_selected_words} | Player 2 selected words{player2_selected_words}"
         )
+        # Score Logic for both players
+        if not check_player1_choice["status"]:
+            player1_score -= 1
+        if not check_player2_choice["status"]:
+            player2_score -= 1
 
-        multiplayer_functionalities.set_scores(
-            player1_score,
-            check_player1_choice["status"],
-            player2_score,
-            check_player2_choice["status"],
+        # Checking for winner
+        multiplayer_functionalities.check_winner(
+            player1_score, player_1, player2_score, player_2
         )
 
 

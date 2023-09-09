@@ -78,15 +78,11 @@ class Functionalities:
 
     # Assigning scores based on difficulty level
     def score_selection(self, mode: str):
-        return (
-            3
-            if mode == "easy"
-            else 4
-            if mode == "medium"
-            else 6
-            if mode == "hard"
-            else 2
-        )
+        if mode == "easy":
+            return 3
+        if mode == "medium":
+            return 4
+        return 6 if mode == "hard" else 2
 
 
 class MultiplayerFunctionalities:
@@ -96,14 +92,14 @@ class MultiplayerFunctionalities:
             player_choice = input(f"{player} {[player_type]} guess a letter: ").lower()
             if len(player_choice) > 1 or player_choice.strip() == "":
                 print(f"{player_type} select only one letter or at least one letter")
-            if player_choice not in ascii_lowercase:
-                print(f"{player_type} select a valid letter")
-            else:
+                continue
+            if player_choice in ascii_lowercase:
                 return player_choice
+            print(f"{player_type} select a valid letter")
 
     # Getting the position correct guesses
     def get_word_position(
-        self, list_random_word: str, dashed_random_word: list, check_user_choice: dict
+        self, list_random_word: list, dashed_random_word: list, check_user_choice: dict
     ):
         if check_user_choice["status"]:
             position_of_letter = check_user_choice["position"]
@@ -119,13 +115,17 @@ class MultiplayerFunctionalities:
         if user_choice not in list_random_word:
             collection_data.add(user_choice)
 
-    def set_scores(
-        self, p1_score: int, p1_status: bool, p2_score: int, p2_status: bool
-    ):
-        if not p1_status:
-            p1_score -= 1
-        if not p2_status:
-            p2_score -= 1
+    # Choosing winner and draw Logic
+    def check_winner(self, p1_score: int, p1_name: str, p2_score: int, p2_name: str):
+        if p1_score == 0 and p2_score == 0:
+            print("Draw no one won")
+            exit()
+        if p1_score > 0 and p2_score == 0:
+            print(f"Player 1 wins [{p1_name}]")
+            exit()
+        if p2_score > 0 and p1_score == 0:
+            print(f"Player 2 wins [{p2_name}]")
+            exit()
 
 
 # Hangman functionalities instance

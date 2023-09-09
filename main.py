@@ -127,7 +127,7 @@ def multiplayer():
             "player1", f"{player_1}"
         )
         # Adding player 1 choices to selected letters data
-        multiplayer_functionalities.chosen_words(
+        p1_chosen = multiplayer_functionalities.chosen_words(
             player1_choice, player1_list_random_words, player1_selected_words
         )
         # Checking if player one has already chosen a letter
@@ -145,7 +145,7 @@ def multiplayer():
             "player2", f"{player_2}"
         )
         # Adding player 2 choices to selected letters data
-        multiplayer_functionalities.chosen_words(
+        p2_chosen = multiplayer_functionalities.chosen_words(
             player2_choice, player2_list_random_words, player2_selected_words
         )
         check_player2_choice = functionalities.check_existence(
@@ -162,7 +162,11 @@ def multiplayer():
         )
         # Score Logic for both players
         if not check_player1_choice["status"]:
+            # if not p1_chosen:
+            #     print(f"{player1_choice} not in random word or no longer exist")
             player1_score -= 1
+            # if p1_chosen:
+            # print(f"{player1_choice} already taken")
         if not check_player2_choice["status"]:
             player2_score -= 1
 
@@ -197,6 +201,7 @@ if __name__ == "__main__":
 # 2. Get each chosen word for both players - done
 # 3. Get winner, loser, draw
 # 4. Deduct score when answers are wrong
+# 5. Winning should not be based on scores alone, word completion also counts
 
 # Errors
 # 1. Fix bug: Make player 2 list words stand independent - fixed

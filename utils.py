@@ -114,18 +114,25 @@ class MultiplayerFunctionalities:
     ):
         if user_choice not in list_random_word:
             collection_data.add(user_choice)
+            # return False
+        # return True
 
     # Choosing winner and draw Logic
     def check_winner(self, p1_score: int, p1_name: str, p2_score: int, p2_name: str):
         if p1_score == 0 and p2_score == 0:
-            print("Draw no one won")
+            print(
+                "Draw no one won\n| Player 1 score: {p1_score} | Player 2 score: {p2_score}"
+            )
             exit()
         if p1_score > 0 and p2_score == 0:
-            print(f"Player 1 wins [{p1_name}]")
+            print(
+                f"Player 1 wins [{p1_name}]\n| Player 1 score: {p1_score} | Player 2 score: {p2_score}"
+            )
             exit()
         if p2_score > 0 and p1_score == 0:
-            print(f"Player 2 wins [{p2_name}]")
-            exit()
+            print(
+                f"Player 2 wins [{p2_name}]\n| Player 1 score: {p1_score} | Player 2 score: {p2_score}"
+            )
 
 
 # Hangman functionalities instance
